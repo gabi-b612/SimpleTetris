@@ -4,16 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    public static final  int WIDTH = 1080;
-    public static final  int HEIGHT = 680;
+    public static final  int WIDTH = 1280;
+    public static final  int HEIGHT = 780;
     final int FPS = 60;
     Thread gameThread;
+    PlayManager pm;
 
     public GamePanel() {
         // Panel Setting
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
         this.setLayout(null);
+
+        this.pm = new PlayManager();
     }
 
     public void launchGame() {
@@ -43,10 +46,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-
+        this.pm.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D)g;
+        this.pm.draw(g2);
     }
 }
