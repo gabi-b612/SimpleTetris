@@ -1,0 +1,5 @@
+
+GamePanel
+
+    Game Loop :
+        Update and draw the screen 60 times par second(60FPS)
