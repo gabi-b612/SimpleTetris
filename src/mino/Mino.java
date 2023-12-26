@@ -1,15 +1,19 @@
 package mino;
 
 import main.GamePanel;
+import main.KeyHandler;
 import main.PlayManager;
 
 import java.awt.*;
+import java.security.Key;
 
 public class Mino {
 
     public Block[] b = new Block[4];
     public Block[] tempB = new Block[4];
     int autoDropCounter = 0;
+    public int direction = 1; // There are 4 directions (1/2/3/4)
+
 
     public void create(Color c) {
         b[0] = new Block(c);
@@ -26,7 +30,44 @@ public class Mino {
 
     public void updateXY (int direction) {};
 
+    public void getDirection1() {}
+    public void getDirection2() {}
+    public void getDirection3() {}
+    public void getDirection4() {}
+
     public void update() {
+
+        // Move the mino
+        if (KeyHandler.upPressed) {
+
+        }
+        if (KeyHandler.downPressed) {
+            b[0].y += Block.SIZE;
+            b[1].y += Block.SIZE;
+            b[2].y += Block.SIZE;
+            b[3].y += Block.SIZE;
+
+            // When moved down, reset the autoDropCounter
+            autoDropCounter = 0;
+            KeyHandler.downPressed = false;
+        }
+        if (KeyHandler.leftPressed) {
+            b[0].x -= Block.SIZE;
+            b[1].x -= Block.SIZE;
+            b[2].x -= Block.SIZE;
+            b[3].x -= Block.SIZE;
+
+            KeyHandler.leftPressed = false;
+        }
+        if (KeyHandler.rightPressed) {
+            b[0].x += Block.SIZE;
+            b[1].x += Block.SIZE;
+            b[2].x += Block.SIZE;
+            b[3].x += Block.SIZE;
+
+            KeyHandler.rightPressed = false;
+        }
+
         autoDropCounter++; // the counter increases in every frame
         if (autoDropCounter == PlayManager.dropInterval) {
             // the mino goes down
