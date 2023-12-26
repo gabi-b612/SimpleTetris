@@ -1,5 +1,8 @@
 package main;
 
+import mino.Block;
+import mino.Mino;
+import mino.Mino_L1;
 import java.awt.*;
 
 public class PlayManager {
@@ -12,16 +15,29 @@ public class PlayManager {
     public static int top_y;
     public static int bottom_y;
 
+    // Mino
+    Mino currentMino;
+    final int MINO_START_X;
+    final int MINO_START_Y;
+
     public PlayManager() {
         // Main play Area Frame
         left_x = (GamePanel.WIDTH/2) - (WIDTH/2);
         right_x = left_x + WIDTH;
         top_y = 50;
         bottom_y = top_y + HEIGHT;
+
+        // Mino initialisation
+        MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
+        MINO_START_Y = top_y + Block.SIZE;
+
+        // Set the starting Mino
+        currentMino = new Mino_L1();
+        currentMino.setXY(MINO_START_X, MINO_START_Y);
     }
 
     public void update() {
-
+        this.currentMino.update();
     }
 
     public void draw(Graphics2D g2) {
@@ -37,5 +53,10 @@ public class PlayManager {
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x+60, y+60);
+
+        //Draw the currentMino
+        if (this.currentMino != null) {
+            currentMino.draw(g2);
+        }
     }
 }
