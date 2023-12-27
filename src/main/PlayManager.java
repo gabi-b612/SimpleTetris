@@ -3,6 +3,7 @@ package main;
 import mino.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayManager {
@@ -19,6 +20,10 @@ public class PlayManager {
     Mino currentMino;
     final int MINO_START_X;
     final int MINO_START_Y;
+    Mino nextMino;
+    final int NEXTMINO_X;
+    final int NEXTMINO_Y;
+    public static ArrayList<Block> staticBlocks = new ArrayList<>(); // add inactive mino
 
     // Others
     public static int dropInterval = 60; // Mino drops in every 60 frames
@@ -34,9 +39,14 @@ public class PlayManager {
         MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
         MINO_START_Y = top_y + Block.SIZE;
 
+        NEXTMINO_X = right_x + 175;
+        NEXTMINO_Y = top_y + 500;
+
         // Set the starting Mino
         currentMino = pickMino();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
+        nextMino = pickMino();
+        nextMino.setXY(NEXTMINO_X,NEXTMINO_Y);
     }
 
     // Picking up a random tetromino
@@ -78,6 +88,9 @@ public class PlayManager {
         if (this.currentMino != null) {
             currentMino.draw(g2);
         }
+
+        // Draw next mino
+        nextMino.draw(g2);
 
         // Draw Pause
         g2.setColor(Color.YELLOW);

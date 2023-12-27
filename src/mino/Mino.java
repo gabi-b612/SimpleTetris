@@ -13,7 +13,7 @@ public class Mino {
     int autoDropCounter = 0;
     public int direction = 1; // There are 4 directions (1/2/3/4)
     boolean leftCollision, rightCollision, bottomCollision;
-
+    public boolean active = true;
 
 
     public void create(Color c) {
@@ -159,14 +159,18 @@ public class Mino {
             KeyHandler.rightPressed = false;
         }
 
-        this.autoDropCounter++; // the counter increases in every frame
-        if (this.autoDropCounter == PlayManager.dropInterval) {
-            // the mino goes down
-            this.b[0].y += Block.SIZE;
-            this.b[1].y += Block.SIZE;
-            this.b[2].y += Block.SIZE;
-            this.b[3].y += Block.SIZE;
-            this.autoDropCounter = 0;
+        if (this.bottomCollision) {
+            this.active = false;
+        } else {
+            this.autoDropCounter++; // the counter increases in every frame
+            if (this.autoDropCounter == PlayManager.dropInterval) {
+                // the mino goes down
+                this.b[0].y += Block.SIZE;
+                this.b[1].y += Block.SIZE;
+                this.b[2].y += Block.SIZE;
+                this.b[3].y += Block.SIZE;
+                this.autoDropCounter = 0;
+            }
         }
     }
 
