@@ -35,7 +35,7 @@ public class PlayManager {
         MINO_START_Y = top_y + Block.SIZE;
 
         // Set the starting Mino
-        currentMino = new Mino_Bar();
+        currentMino = pickMino();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
     }
 
@@ -77,6 +77,15 @@ public class PlayManager {
         //Draw the currentMino
         if (this.currentMino != null) {
             currentMino.draw(g2);
+        }
+
+        // Draw Pause
+        g2.setColor(Color.YELLOW);
+        g2.setFont(g2.getFont().deriveFont(50f));
+        if (KeyHandler.pausePressed) {
+            x = left_x + 70;
+            y = top_y + 320;
+            g2.drawString("PAUSED",x,y);
         }
     }
 }
