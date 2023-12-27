@@ -57,6 +57,9 @@ public class Mino {
         this.rightCollision = false;
         this.bottomCollision = false;
 
+        // Check static block collision
+        this.checkStaticBlockCollision();
+
         // Check frame collision
         // Left wall
         for (Block block : b) {
@@ -86,6 +89,9 @@ public class Mino {
         this.rightCollision = false;
         this.bottomCollision = false;
 
+        // Check static block collision
+        this.checkStaticBlockCollision();
+
         // Check frame collision
         // Left wall
         for (Block block : tempB) {
@@ -107,6 +113,37 @@ public class Mino {
             if (block.y + Block.SIZE > PlayManager.bottom_y) {
                 this.bottomCollision = true;
                 break;
+            }
+        }
+    }
+
+    private void checkStaticBlockCollision() {
+
+        for (int i = 0; i < PlayManager.staticBlocks.size(); i++) {
+
+            int targetX = PlayManager.staticBlocks.get(i).x;
+            int targetY = PlayManager.staticBlocks.get(i).y;
+
+            // check down
+            for (Block block : this.b) {
+                if (block.y + Block.SIZE == targetY && block.x == targetX) {
+                    bottomCollision = true;
+                    break;
+                }
+            }
+            // check left
+            for (Block block : this.b) {
+                if (block.x - Block.SIZE == targetX && block.y == targetY) {
+                    leftCollision = true;
+                    break;
+                }
+            }
+            // check right
+            for (Block block : this.b) {
+                if (block.x + Block.SIZE == targetX && block.y == targetY) {
+                    rightCollision = true;
+                    break;
+                }
             }
         }
     }
