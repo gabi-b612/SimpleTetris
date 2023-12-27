@@ -1,11 +1,10 @@
 package mino;
 
-import main.GamePanel;
+
 import main.KeyHandler;
 import main.PlayManager;
 
 import java.awt.*;
-import java.security.Key;
 
 public class Mino {
 
@@ -28,7 +27,7 @@ public class Mino {
         this.tempB[3] = new Block(c);
     }
 
-    public void setXY(int x, int y) {};
+    public void setXY(int x, int y) {}
 
     public void updateXY (int direction) {
         this.checkRotationCollision();
