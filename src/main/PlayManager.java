@@ -27,6 +27,7 @@ public class PlayManager {
 
     // Others
     public static int dropInterval = 60; // Mino drops in every 60 frames
+    boolean gameOver;
 
     // Effect Delete
     boolean effectCounterOn;
@@ -79,6 +80,13 @@ public class PlayManager {
             staticBlocks.add(this.currentMino.b[1]);
             staticBlocks.add(this.currentMino.b[2]);
             staticBlocks.add(this.currentMino.b[3]);
+
+            // Check if the game is over
+            if (this.currentMino.b[0].x == MINO_START_X && this.currentMino.b[0].y == MINO_START_Y) {
+                // this means the current Mino immediately collided a block and couldn't move at all
+                // So it's xy are the same with the nextMino's
+                gameOver = true;
+            }
 
             this.currentMino.deactivating = false;
 
@@ -186,10 +194,15 @@ public class PlayManager {
             }
         }
 
-        // Draw Pause
+        // Draw Pause and Game Over
         g2.setColor(Color.YELLOW);
         g2.setFont(g2.getFont().deriveFont(50f));
-        if (KeyHandler.pausePressed) {
+        if (gameOver) {
+            x = left_x + 25;
+            y = top_y + 320;
+            g2.drawString("GAME OVER", x,y);
+        }
+        else if (KeyHandler.pausePressed) {
             x = left_x + 70;
             y = top_y + 320;
             g2.drawString("PAUSED",x,y);
