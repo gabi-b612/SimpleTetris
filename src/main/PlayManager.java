@@ -207,5 +207,12 @@ public class PlayManager {
             y = top_y + 320;
             g2.drawString("PAUSED",x,y);
         }
+
+        // Draw the Game Title
+        x = 35;
+        y = top_y + 320;
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Arial", Font.ITALIC, 60));
+        g2.drawString("Tetris",x,y);
     }
 }
