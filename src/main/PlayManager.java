@@ -68,12 +68,14 @@ public class PlayManager {
 
     public void update() {
         // Check if the currentMino is active
-        if (!currentMino.active) {
+        if (!this.currentMino.active) {
             // put it into the static Blocks
-            staticBlocks.add(currentMino.b[0]);
-            staticBlocks.add(currentMino.b[1]);
-            staticBlocks.add(currentMino.b[2]);
-            staticBlocks.add(currentMino.b[3]);
+            staticBlocks.add(this.currentMino.b[0]);
+            staticBlocks.add(this.currentMino.b[1]);
+            staticBlocks.add(this.currentMino.b[2]);
+            staticBlocks.add(this.currentMino.b[3]);
+
+            this.currentMino.deactivating = false;
 
             // replace the current Mino with the next Mino
             this.currentMino = this.nextMino;
