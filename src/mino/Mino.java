@@ -13,6 +13,8 @@ public class Mino {
     public Block[] tempB = new Block[4];
     int autoDropCounter = 0;
     public int direction = 1; // There are 4 directions (1/2/3/4)
+    boolean leftCollision, rightCollision, bottomCollision;
+
 
 
     public void create(Color c) {
@@ -48,6 +50,37 @@ public class Mino {
     public void getDirection3() {}
     public void getDirection4() {}
 
+    public void checkMovementCollision() {
+        leftCollision = false;
+        rightCollision = false;
+        bottomCollision = false;
+
+        // Check frame collision
+        // Left wall
+        for (Block block : b) {
+            if (block.x == PlayManager.left_x) {
+                leftCollision = true;
+                break;
+            }
+        }
+        // Right wall
+        for (Block block : b) {
+            if (block.x + Block.SIZE == PlayManager.right_x) {
+                rightCollision = true;
+                break;
+            }
+        }
+
+        // Bottom floor
+        for (Block block:b) {
+            if (block.y + Block.SIZE == PlayManager.bottom_y) {
+                bottomCollision = true;
+                break;
+            }
+        }
+    }
+    public void checkRotationCollision() {}
+
     public void update() {
 
         // Move the mino
@@ -60,30 +93,39 @@ public class Mino {
             }
             KeyHandler.upPressed = false;
         }
-        if (KeyHandler.downPressed) {
-            b[0].y += Block.SIZE;
-            b[1].y += Block.SIZE;
-            b[2].y += Block.SIZE;
-            b[3].y += Block.SIZE;
 
-            // When moved down, reset the autoDropCounter
-            autoDropCounter = 0;
+        checkMovementCollision();
+
+        if (KeyHandler.downPressed) {
+            if (!bottomCollision) {
+                b[0].y += Block.SIZE;
+                b[1].y += Block.SIZE;
+                b[2].y += Block.SIZE;
+                b[3].y += Block.SIZE;
+
+                // When moved down, reset the autoDropCounter
+                autoDropCounter = 0;
+            }
             KeyHandler.downPressed = false;
         }
-        if (KeyHandler.leftPressed) {
-            b[0].x -= Block.SIZE;
-            b[1].x -= Block.SIZE;
-            b[2].x -= Block.SIZE;
-            b[3].x -= Block.SIZE;
 
+        if (KeyHandler.leftPressed) {
+            if (!leftCollision) {
+                b[0].x -= Block.SIZE;
+                b[1].x -= Block.SIZE;
+                b[2].x -= Block.SIZE;
+                b[3].x -= Block.SIZE;
+            }
             KeyHandler.leftPressed = false;
         }
-        if (KeyHandler.rightPressed) {
-            b[0].x += Block.SIZE;
-            b[1].x += Block.SIZE;
-            b[2].x += Block.SIZE;
-            b[3].x += Block.SIZE;
 
+        if (KeyHandler.rightPressed) {
+            if (!rightCollision) {
+                b[0].x += Block.SIZE;
+                b[1].x += Block.SIZE;
+                b[2].x += Block.SIZE;
+                b[3].x += Block.SIZE;
+            }
             KeyHandler.rightPressed = false;
         }
 
