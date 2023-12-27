@@ -28,6 +28,11 @@ public class PlayManager {
     // Others
     public static int dropInterval = 60; // Mino drops in every 60 frames
 
+    // Effect Delete
+    boolean effectCounterOn;
+    int effectCounter;
+    ArrayList<Integer> effectY = new ArrayList<>();
+
     public PlayManager() {
         // Main play Area Frame
         left_x = (GamePanel.WIDTH/2) - (WIDTH/2);
@@ -82,8 +87,59 @@ public class PlayManager {
             this.currentMino.setXY(MINO_START_X,MINO_START_Y);
             this.nextMino = this.pickMino();
             this.nextMino.setXY(NEXTMINO_X,NEXTMINO_Y);
+
+            // When a mino becomes inactive, check if line(s) can be deleted
+            this.checkDelete();
         } else {
             this.currentMino.update();
+        }
+    }
+
+    private void checkDelete() {
+        int x = left_x;
+        int y = top_y;
+        int blockCount = 0;
+
+        while (x < right_x && y < bottom_y) {
+
+            for (Block staticBlock : staticBlocks) {
+                if (staticBlock.x == x && staticBlock.y == y) {
+                    // increase the count if there is a static block
+                    blockCount++;
+                }
+            }
+
+            x += Block.SIZE;
+
+            if (x == right_x) {
+
+                // if the blockCount hits 12, that means the current y line is all filled with blocks,
+                // so we can delete them
+                if (blockCount == 12) {
+
+                    this.effectCounterOn = true;
+                    effectY.add(y);
+
+                    for (int i = staticBlocks.size() - 1; i > -1; i--) {
+                        // remove all the blocks in the current y line
+                        if (staticBlocks.get(i).y == y) {
+                            staticBlocks.remove(i);
+                        }
+                    }
+
+                    // a line has been deleted so need to slide down blocks that are above it
+                    for (Block staticBlock : staticBlocks) {
+                        // if a block is above the current y, move it down by the block size
+                        if (staticBlock.y < y) {
+                            staticBlock.y += Block.SIZE;
+                        }
+                    }
+                }
+
+                blockCount = 0;
+                x = left_x;
+                y += Block.SIZE;
+            }
         }
     }
 
@@ -112,6 +168,22 @@ public class PlayManager {
         // Draw Static Blocks
         for (Block staticBlock : staticBlocks) {
             staticBlock.draw(g2);
+        }
+
+        // Draw Effect
+        if (this.effectCounterOn) {
+            this.effectCounter++;
+
+            g2.setColor(Color.black);
+            for (Integer integer : effectY) {
+                g2.fillRect(left_x, integer, WIDTH, Block.SIZE);
+            }
+
+            if (this.effectCounter == 10) {
+                this.effectCounterOn = false;
+                this.effectCounter = 0;
+                this.effectY.clear();
+            }
         }
 
         // Draw Pause
