@@ -34,6 +34,9 @@ public class PlayManager {
     int effectCounter;
     ArrayList<Integer> effectY = new ArrayList<>();
 
+    // Score
+    int level = 1, lines, score;
+
     public PlayManager() {
         // Main play Area Frame
         left_x = (GamePanel.WIDTH/2) - (WIDTH/2);
@@ -107,6 +110,7 @@ public class PlayManager {
         int x = left_x;
         int y = top_y;
         int blockCount = 0;
+        int lineCount = 0;
 
         while (x < right_x && y < bottom_y) {
 
@@ -135,6 +139,20 @@ public class PlayManager {
                         }
                     }
 
+                    lineCount++;
+                    lines++;
+                    // Drop Speed
+                    // if the line score hits a certain number, increase the drop speed
+                    // 1 is the fasted
+                    if (lines % 10 == 0 && dropInterval > 1) {
+                        level++;
+                        if (dropInterval > 10) {
+                            dropInterval -= 10;
+                        } else {
+                            dropInterval -= 1;
+                        }
+                    }
+
                     // a line has been deleted so need to slide down blocks that are above it
                     for (Block staticBlock : staticBlocks) {
                         // if a block is above the current y, move it down by the block size
@@ -148,6 +166,11 @@ public class PlayManager {
                 x = left_x;
                 y += Block.SIZE;
             }
+        }
+        // Add Score
+        if (lineCount > 0) {
+            int singleLineScore = 10 * level;
+            this.score += singleLineScore * lineCount;
         }
     }
 
@@ -164,6 +187,14 @@ public class PlayManager {
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x+60, y+60);
+
+        // Draw Score Frame
+        g2.drawRect(x, top_y, 250, 300);
+        x += 40;
+        y = top_y + 90;
+        g2.drawString("LEVEL: " + this.level, x,y); y += 70;
+        g2.drawString("LINES: " + this.lines, x,y); y += 70;
+        g2.drawString("SCORE: " + this.score, x,y);
 
         //Draw the currentMino
         if (this.currentMino != null) {
@@ -213,6 +244,6 @@ public class PlayManager {
         y = top_y + 320;
         g2.setColor(Color.white);
         g2.setFont(new Font("Arial", Font.ITALIC, 60));
-        g2.drawString("Tetris",x,y);
+        g2.drawString("TETRIS",x,y);
     }
 }
