@@ -2,10 +2,12 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GamePanel extends JPanel implements Runnable {
-    public static final  int WIDTH = 1280;
-    public static final  int HEIGHT = 780;
+    public static final  int WIDTH = 390;
+    public static final  int HEIGHT = 690;
     final int FPS = 60;
     Thread gameThread;
     PlayManager pm;
@@ -18,6 +20,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         // Implement KeyListener
         this.addKeyListener(new KeyHandler());
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                requestFocusInWindow();
+            }
+        });
+
         this.setFocusable(true);
 
         this.pm = new PlayManager();

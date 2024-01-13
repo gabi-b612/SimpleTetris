@@ -183,18 +183,18 @@ public class PlayManager {
         // Draw Next Mino Frame
         int x = right_x + 100;
         int y = bottom_y -200;
-        g2.drawRect(x,y,200,200);
+        /*g2.drawRect(x,y,200,200);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.drawString("NEXT", x+60, y+60);
+        g2.drawString("NEXT", x+60, y+60);*/
 
         // Draw Score Frame
-        g2.drawRect(x, top_y, 250, 300);
+        /*g2.drawRect(x, top_y, 250, 300);
         x += 40;
         y = top_y + 90;
         g2.drawString("LEVEL: " + this.level, x,y); y += 70;
         g2.drawString("LINES: " + this.lines, x,y); y += 70;
-        g2.drawString("SCORE: " + this.score, x,y);
+        g2.drawString("SCORE: " + this.score, x,y);*/
 
         //Draw the currentMino
         if (this.currentMino != null) {
@@ -240,10 +240,10 @@ public class PlayManager {
         }
 
         // Draw the Game Title
-        x = 35;
+        /*x = 35;
         y = top_y + 320;
         g2.setColor(Color.white);
         g2.setFont(new Font("Arial", Font.ITALIC, 60));
-        g2.drawString("TETRIS",x,y);
+        g2.drawString("TETRIS",x,y);*/
     }
 }
